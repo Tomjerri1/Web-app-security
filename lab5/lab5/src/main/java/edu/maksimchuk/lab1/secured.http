@@ -1,0 +1,54 @@
+### 1. Public hello (no auth) дозволено всім
+GET http://localhost:8080/public/hello
+###
+
+### 2. User profile (carol, ROLE_USER) дозволено USER
+GET http://localhost:8080/user/profile
+Authorization: Basic Y2Fyb2w6Y2Fyb2xwYXNz
+###
+
+### 3. Manager stats (bob, ROLE_MANAGER) дозволено MANAGER
+GET http://localhost:8080/manage/stats
+Authorization: Basic Ym9iOmJvYnBhc3M=
+###
+
+### 4. Admin panel (alice, ROLE_ADMIN) дозволено ADMIN
+GET http://localhost:8080/admin/panel
+Authorization: Basic YWxpY2U6YWxpY2VwYXNz
+###
+
+### 5. Read data (carol, ROLE_USER) дозволено USER+
+GET http://localhost:8080/data/read
+Authorization: Basic Y2Fyb2w6Y2Fyb2xwYXNz
+###
+
+### 6. Write data (carol, ROLE_USER) заборонено USER (потрібно MANAGER або ADMIN)
+POST http://localhost:8080/data/write
+Authorization: Basic Y2Fyb2w6Y2Fyb2xwYXNz
+Content-Type: text/plain
+
+payload=1
+###
+
+### 7. Admin panel (bob, ROLE_MANAGER) заборонено MANAGER (потрібно ADMIN)
+GET http://localhost:8080/admin/panel
+Authorization: Basic Ym9iOmJvYnBhc3M=
+###
+
+### 8. Manager stats (carol, ROLE_USER) заборонено USER (потрібно MANAGER або ADMIN)
+GET http://localhost:8080/manage/stats
+Authorization: Basic Y2Fyb2w6Y2Fyb2xwYXNz
+###
+
+### 9. User profile (alice, ROLE_ADMIN) заборонено ADMIN (якщо конфігурація дозволяє лише USER+)
+GET http://localhost:8080/user/profile
+Authorization: Basic YWxpY2U6YWxpY2VwYXNz
+###
+
+### 10. Create admin-only object (bob, ROLE_MANAGER) заборонено MANAGER (потрібно ADMIN)
+POST http://localhost:8080/admin/create
+Authorization: Basic Ym9iOmJvYnBhc3M=
+Content-Type: text/plain
+
+new_object
+###
