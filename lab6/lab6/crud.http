@@ -1,0 +1,43 @@
+### GET READ - всі продукти
+GET http://localhost:8080/api/products
+Authorization: Basic admin admin
+Accept: application/json
+
+###
+
+### GET READ — продукт по ID
+GET http://localhost:8080/api/products/{{id}}
+Authorization: Basic admin admin
+Accept: application/json
+
+###
+
+### GET CREATE — новий продукт
+POST http://localhost:8080/api/products
+Authorization: Basic admin admin
+Content-Type: application/json
+
+{
+  "name": "Monitor",
+  "description": "4K Ultra HD",
+  "price": 450.0
+}
+
+###
+
+### GET UPDATE — оновлення продукту по ID
+PUT http://localhost:8080/api/products/{{id}}
+Authorization: Basic admin admin
+Content-Type: application/json
+
+{
+  "name": "Updated Monitor",
+  "description": "Updated description",
+  "price": 470.0
+}
+
+###
+
+### GET DELETE — видалення продукту по ID
+DELETE http://localhost:8080/api/products/{{id}}
+Authorization: Basic admin admin

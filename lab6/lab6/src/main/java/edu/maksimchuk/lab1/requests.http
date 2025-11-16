@@ -1,0 +1,61 @@
+### 1. Open endpoint — anyone can access
+GET http://localhost:8080/public/hello
+###
+
+### 2. Access user profile — carol (ROLE_USER)
+GET http://localhost:8080/user/profile
+Authorization: Basic Y2Fyb2w6Y2Fyb2xwYXNz
+###
+
+### 3. Access manager stats — bob (ROLE_MANAGER)
+GET http://localhost:8080/manage/stats
+Authorization: Basic Ym9iOmJvYnBhc3M=
+###
+
+### 4. Admin dashboard — alice (ROLE_ADMIN)
+GET http://localhost:8080/admin/panel
+Authorization: Basic YWxpY2U6YWxpY2VwYXNz
+###
+
+### 5. Read shared data — bob (ROLE_MANAGER)
+GET http://localhost:8080/data/read
+Authorization: Basic Ym9iOmJvYnBhc3M=
+###
+
+### 6. Attempt write data — carol (ROLE_USER) — should fail 403
+POST http://localhost:8080/data/write
+Authorization: Basic Y2Fyb2w6Y2Fyb2xwYXNz
+Content-Type: application/json
+
+{
+  "test": "write attempt"
+}
+###
+
+### 7. Admin-only creation — alice (ROLE_ADMIN)
+POST http://localhost:8080/admin/create
+Authorization: Basic YWxpY2U6YWxpY2VwYXNz
+Content-Type: text/plain
+
+Create new item
+###
+
+### 8. Forbidden access to admin panel — bob (ROLE_MANAGER)
+GET http://localhost:8080/admin/panel
+Authorization: Basic Ym9iOmJvYnBhc3M=
+###
+
+### 9. Forbidden access to manager stats — carol (ROLE_USER)
+GET http://localhost:8080/manage/stats
+Authorization: Basic Y2Fyb2w6Y2Fyb2xwYXNz
+###
+
+### 10. Write data attempt — bob (ROLE_MANAGER)
+POST http://localhost:8080/data/write
+Authorization: Basic Ym9iOmJvYnBhc3M=
+Content-Type: application/json
+
+{
+  "info": "manager write"
+}
+###
